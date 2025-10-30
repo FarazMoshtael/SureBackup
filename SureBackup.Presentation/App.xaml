@@ -1,0 +1,22 @@
+﻿<Application x:Class="SureBackup.Presentation.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:SureBackup.Presentation">
+    <Application.Resources>
+        <FontFamily x:Key="FontAwesome">pack://application:,,,/Fonts/#Font Awesome 7 Free Solid</FontFamily>
+        <Color x:Key="TealColo">#47909f</Color>
+        <Color x:Key="PinkColo">#fc6c8c</Color>
+        <Color x:Key="LightGrayBlueColor">#e0ecf0</Color>
+        <SolidColorBrush x:Key="TealColorBrush" Color="{StaticResource TealColo}" />
+        <SolidColorBrush x:Key="PinkColorBrush" Color="{StaticResource PinkColo}" />
+        <SolidColorBrush x:Key="LightGrayBlueColorBrush" Color="{StaticResource LightGrayBlueColor}" />
+
+        <Style x:Key="TableCellStyle" TargetType="Border">
+            <Style.Setters>
+                <Setter Property="BorderBrush" Value="{StaticResource TealColorBrush}" />
+                <Setter Property="Background" Value="White" />
+            </Style.Setters>
+        </Style>
+    </Application.Resources>
+   
+</Application>

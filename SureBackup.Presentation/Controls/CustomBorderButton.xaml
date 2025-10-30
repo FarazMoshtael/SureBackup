@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="SureBackup.Presentation.Controls.CustomBorderButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SureBackup.Presentation.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="100"  x:Name="Root">
+    <Border CornerRadius="3" BorderThickness="1"  Background="{Binding BorderBackground,ElementName=Root,Mode=TwoWay}"   Cursor="Hand">
+        <Border.Style>
+            <Style TargetType="Border">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Availability,ElementName=Root}" Value="False">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Availability,ElementName=Root}" Value="True">
+                        <Setter Property="Visibility" Value="Visible"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Border.Style>
+
+        <Button  HorizontalAlignment="Center"  Background="Transparent" BorderThickness="0" BorderBrush="WhiteSmoke"
+IsEnabled="{Binding RunButtonEnabled}" Padding="{Binding ButtonPadding,ElementName=Root}" Command="{Binding Command,ElementName=Root}">
+            <Button.ContentTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal" Margin="10,0,10,0">
+                            <TextBlock Text="{Binding FontContent,ElementName=Root}" FontFamily="{StaticResource FontAwesome}" VerticalAlignment="Center" Foreground="{Binding Foreground,ElementName=Root}" FontSize="{Binding FontSize,ElementName=Root}" Margin="5" />
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </Button.ContentTemplate>
+        </Button>
+    </Border>
+</UserControl>

@@ -1,0 +1,54 @@
+﻿<Window x:Class="SureBackup.Presentation.Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SureBackup.Presentation.Windows" xmlns:usercontrols="clr-namespace:SureBackup.Presentation.UserControls" xmlns:controls="clr-namespace:SureBackup.Presentation.Controls"
+        mc:Ignorable="d"
+        Title="SureBackup" Height="550" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+
+    <Grid Background="{StaticResource TealColorBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+
+        <StackPanel Grid.Column="0" Grid.Row="0" Grid.RowSpan="3"  Orientation="Vertical">
+            <controls:CustomBorderButton BorderBackground="{StaticResource TealColorBrush}"
+                                          BorderThickness="0,0,0,1" BorderBrush="{StaticResource LightGrayBlueColorBrush}" FontContent="&#xF015;" Foreground="White" FontSize="20"
+                                         Command="{Binding MainViewCommand}" ButtonPadding="15"/>
+
+            <controls:CustomBorderButton BorderBackground="{StaticResource TealColorBrush}"
+                                    BorderThickness="0,0,0,1" BorderBrush="{StaticResource LightGrayBlueColorBrush}" FontContent="&#xF013;" Foreground="White" FontSize="20"
+                                   Command="{Binding SettingViewCommand}" ButtonPadding="15"/>
+
+
+            <controls:CustomBorderButton BorderBackground="{StaticResource TealColorBrush}"
+                         BorderThickness="0,0,0,1" BorderBrush="{StaticResource LightGrayBlueColorBrush}" FontContent="&#xf1c0;" Foreground="White" FontSize="20"
+                        Command="{Binding DatabaseListViewCommand}" ButtonPadding="15"/>
+   
+            <controls:CustomBorderButton BorderBackground="{StaticResource TealColorBrush}"
+                BorderThickness="0,0,0,1" BorderBrush="{StaticResource LightGrayBlueColorBrush}" FontContent="&#xf03a;" Foreground="White" FontSize="20"
+               Command="{Binding LogListViewCommand}" ButtonPadding="15"/>
+            
+          
+        </StackPanel>
+        <Border Grid.Column="1" Grid.Row="0" BorderThickness="1,0,0,0" BorderBrush="{StaticResource LightGrayBlueColorBrush}" 
+                Background="{StaticResource LightGrayBlueColorBrush}">
+            <ContentPresenter Grid.Column="1" x:Name="ContentPresenter"/>
+        
+        </Border>
+        <StackPanel Background="{StaticResource LightGrayBlueColorBrush}" Grid.Row="2" Grid.Column="1">
+            
+        </StackPanel>
+        
+        
+        
+        
+    </Grid>
+</Window>

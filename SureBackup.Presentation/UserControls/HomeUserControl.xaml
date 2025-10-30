@@ -1,0 +1,93 @@
+﻿<UserControl x:Class="SureBackup.Presentation.UserControls.HomeUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SureBackup.Presentation.UserControls" xmlns:controls="clr-namespace:SureBackup.Presentation.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"  >
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" VerticalAlignment="Top" CornerRadius="3" Margin="20,20,10,0" BorderBrush="white" Background="White" BorderThickness="0,1,1,0" Padding="10" >
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Last Backup:" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding LastBackup}" Margin="5,0,0,0" FontSize="15"  HorizontalAlignment="Center" TextWrapping="Wrap"/>
+            </StackPanel>
+        </Border>
+        <Grid VerticalAlignment="Center" Grid.Row="1" ShowGridLines="False"  Margin="20" >
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <!--<ColumnDefinition />-->
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Border  Style="{StaticResource TableCellStyle}" BorderThickness="1,1,1,0" Padding="10" CornerRadius="5,0,0,0" >
+                <TextBlock Text="Encryption" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center"/>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="0"   Style="{StaticResource TableCellStyle}" BorderThickness="1" CornerRadius="0,0,0,5" Padding="10" >
+                <TextBlock Text="{Binding EncryptionStatus}" FontSize="15"   HorizontalAlignment="Center"/>
+
+            </Border>
+            <Border Grid.Row="0" Grid.Column="1"  Style="{StaticResource TableCellStyle}" BorderThickness="0,1,1,0" Padding="10" >
+                <TextBlock Text="FTP Connection" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center"/>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="1"  Style="{StaticResource TableCellStyle}" BorderThickness="0,1,1,1" Padding="10" >
+                <TextBlock Text="{Binding FTPStatus}" FontSize="15"   HorizontalAlignment="Center"/>
+
+            </Border>
+
+
+            <Border Grid.Row="0" Grid.Column="3"  BorderThickness="0,1,1,0" Padding="10" CornerRadius="0,5,0,0"  Style="{StaticResource TableCellStyle}">
+                <TextBlock Text="Backup Process" FontSize="15"   HorizontalAlignment="Center" FontWeight="Bold"/>
+
+            </Border>
+            <Border Grid.Row="1" Grid.Column="3"   Style="{StaticResource TableCellStyle}" BorderThickness="0,1,1,1" CornerRadius="0,0,5,0" Padding="10">
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    
+
+                    <controls:CustomBorderButton BorderBackground="{StaticResource LightGrayBlueColorBrush}" Availability="{Binding RunButtonEnabled}" Command="{Binding RunBackupProcessCommand}"
+                                               FontContent="&#xf04b;"  Foreground="Green" FontSize="20" ButtonPadding="5"/>
+                    <controls:CustomBorderButton BorderBackground="{StaticResource LightGrayBlueColorBrush}" Availability="{Binding StopButtonEnabled}" Command="{Binding StopBackupProcessCommand}"
+                               FontContent="&#xf04d;"  Foreground="OrangeRed" FontSize="20" ButtonPadding="5"/>
+                    
+                </StackPanel>
+            </Border>
+            
+        </Grid>
+        <Border Grid.Row="2" Margin="20" Background="White" BorderBrush="White" CornerRadius="3" Padding="5" Visibility="{Binding BackupProcessStatusVisibility,Mode=TwoWay}">
+            <StackPanel Orientation="Vertical" >
+                <TextBlock Text="Timer is in progress ..." />
+                <ProgressBar Height="15" Margin="0,10,0,0">
+                    <ProgressBar.Style>
+                        <Style TargetType="ProgressBar">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding BackupSetting.FTPUpload}" Value="False">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding BackupSetting.FTPUpload}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ProgressBar.Style>
+                </ProgressBar>
+            </StackPanel>
+        </Border>
+        
+    </Grid>
+    
+    
+</UserControl>
