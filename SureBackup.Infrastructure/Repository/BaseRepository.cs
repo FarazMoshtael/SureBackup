@@ -1,5 +1,6 @@
 ﻿
 
+using Azure;
 using Microsoft.EntityFrameworkCore;
 using SureBackup.Application.Repository;
 using SureBackup.Domain.Common;
@@ -39,12 +40,22 @@ public abstract class BaseRepository<TModel, TKey> : IBaseRepository<TModel> whe
         return item;
     }
 
-    public IQueryable<TModel> QueryableItems(int? PageSize = null, int? Page = null)
+    public IQueryable<TModel> QueryableItems(int? pageSize = null, int? page = null,bool noTracking=false)
     {
-        return EntityDBSet.OrderBy(GetKey()).CheckPagination(PageSize, Page);
+        IQueryable<TModel> query = EntityDBSet.AsQueryable();
+        if(noTracking)
+            query=query.AsNoTracking();
+        return CheckOrderPagination(query, pageSize, page);
     }
 
-  
+    private IQueryable<TModel> CheckOrderPagination(IQueryable<TModel> query,  int? pageSize = null, int? page = null)
+    {
+        if (pageSize.HasValue && page.HasValue)
+            return query.OrderBy(GetKey()).CheckPagination(pageSize, page);
+
+        return query;
+    }
+
     public async Task<TModel> UpdateAsync(TModel item)
     {
         await Context.SaveChangesAsync();

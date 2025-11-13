@@ -11,7 +11,7 @@ public static class Constants
     public const int HourMilisecond = 3600000;
     public const int DayMilisecond = 43200000;
     public const int MaximumDaysInMonth = 31;
-    public const string DefaultDateFormat = "yyyy-MM-dd HH:mm ZZ";
+    public const string DefaultDateFormat = "yyyy-MM-dd HH:mm tt";
     public const string NotAvailable = "N/A";
     public const string Available = "Available";
     public const int KeySize = 16;

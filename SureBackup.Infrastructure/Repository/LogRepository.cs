@@ -1,5 +1,6 @@
 ﻿
 
+using Azure;
 using Microsoft.EntityFrameworkCore;
 using SureBackup.Application.Repository;
 using SureBackup.Domain.Common;
@@ -21,7 +22,7 @@ public class LogRepository : BaseRepository<Log, int>, ILogRepository
     {
         return item => item.ID;
     }
-    public async Task<Result> NewErrorLogAsync(string message, DatabaseInfo databaseInfo)
+    public async Task<Result> NewErrorLogAsync(string message, DatabaseInfo databaseInfo, int batchNumber)
     {
         Log log = new()
         {
@@ -29,13 +30,14 @@ public class LogRepository : BaseRepository<Log, int>, ILogRepository
             Type = AppLogType.Error,
             DatabaseInfoID = databaseInfo.ID,
             Date = DateTime.Now,
+            BatchNumber = batchNumber
         };
 
         await AddAsync(log);
         return Result.Successful();
     }
 
-    public async Task<Result> NewInformationLogAsync(string message, DatabaseInfo databaseInfo)
+    public async Task<Result> NewInformationLogAsync(string message, DatabaseInfo databaseInfo, int batchNumber)
     {
         Log log = new()
         {
@@ -43,6 +45,7 @@ public class LogRepository : BaseRepository<Log, int>, ILogRepository
             Type = AppLogType.Information,
             DatabaseInfoID = databaseInfo.ID,
             Date = DateTime.Now,
+            BatchNumber = batchNumber
         };
         await AddAsync(log);
         return Result.Successful();
@@ -50,6 +53,16 @@ public class LogRepository : BaseRepository<Log, int>, ILogRepository
 
     public IQueryable<Log> GetLogs(int? PageSize = null, int? Page = null)
     {
-        return QueryableItems(PageSize, Page).OrderByDescending(item => item.Date).Include(item => item.DatabaseInfo);
+        return QueryableItems(PageSize, Page,noTracking:true).Include(item => item.DatabaseInfo).OrderByDescending(item => item.Date);
+    }
+
+    public IList<Log> GetRecentLogs()
+    {
+        return QueryableItems(noTracking: true).Include(item => item.DatabaseInfo).GroupBy(item => item.BatchNumber).AsEnumerable().OrderByDescending(item => item.Key).FirstOrDefault()?.ToList()??[];
+    }
+
+    public int NewBatchNumber()
+    {
+        return (QueryableItems(noTracking:true).OrderByDescending(item => item.BatchNumber).FirstOrDefault()?.BatchNumber??0)+1;
     }
 }

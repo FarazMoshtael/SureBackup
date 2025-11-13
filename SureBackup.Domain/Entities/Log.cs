@@ -20,6 +20,7 @@ public class Log : Entity
     }
     public int DatabaseInfoID { get; set; }
     public AppLogType Type { get; set; }
+    public int BatchNumber { get; set; } = 1; 
     public virtual DatabaseInfo? DatabaseInfo { get; set; }
 
 }

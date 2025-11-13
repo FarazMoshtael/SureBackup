@@ -25,7 +25,7 @@ public partial class BackupSetting : Entity
         get => _backupOperationPath; set
         {
             if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentException(DomainMessages.BackupSetting.InvalidBackupOperationPath);
+                throw new ArgumentException(DomainMessages.BackupSetting.EmptyBackupOperationPath);
             _backupOperationPath = value;
 
             this.ValidateRegex(nameof(BackupOperationPath), value);

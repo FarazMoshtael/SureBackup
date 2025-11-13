@@ -21,7 +21,7 @@
         </Border.Style>
 
         <Button  HorizontalAlignment="Center"  Background="Transparent" BorderThickness="0" BorderBrush="WhiteSmoke"
-IsEnabled="{Binding RunButtonEnabled}" Padding="{Binding ButtonPadding,ElementName=Root}" Command="{Binding Command,ElementName=Root}">
+ Padding="{Binding ButtonPadding,ElementName=Root}" Command="{Binding Command,ElementName=Root}">
             <Button.ContentTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">

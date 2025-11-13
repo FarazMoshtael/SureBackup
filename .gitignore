@@ -415,3 +415,9 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+*.cer
+*.appinstaller
+*.appxbundle
+*.msixbundle
+*.appxupload
+AppPackages/

@@ -12,12 +12,13 @@ public class FTPProcessService(ILogger<FTPProcessService> logger, IFTPClient ftp
 {
     private BackupSetting? _setting;
 
-    public void SetupFTPCredentials(BackupSetting setting)
+    public  void SetupFTPCredentials(BackupSetting setting)
     {
         if (!setting.FTPCredentialsAvailable)
             throw new UnknownEntityException("FTP credentials");
 
         _setting = setting;
+        ftpClient.SetupFTPConnection(setting.FTPUrl!, setting.FTPUsername!, setting.FTPPassword!);
     }
 
     public async Task<Result> CheckConnection() => await ftpClient.ConnectAsync();
@@ -42,7 +43,7 @@ public class FTPProcessService(ILogger<FTPProcessService> logger, IFTPClient ftp
                     foreach (var file in oldestDateFiles)
                     {
                         Result removingFileResult = await ftpClient.DeleteAsync(file.Name);
-                        if(!removingFileResult.Success)
+                        if (!removingFileResult.Success)
                             return removingFileResult;
                     }
 

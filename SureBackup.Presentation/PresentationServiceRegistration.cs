@@ -17,6 +17,8 @@ public static class PresentationServiceRegistration
     public static IHostBuilder RegisterPresentationServices(this IHostBuilder hostBuilder)=> hostBuilder.ConfigureServices(services =>
     {
         services.AddSingleton<ISidebarNavigationService, SidebarNavigationService>();
+        services.AddSingleton<IWindowNavigationService,WindowNavigationService>();
+
         services.AddSingleton<MainWindow>();
         services.AddSingleton<MainViewModel>();
         services.AddSingleton<HomeUserControl>();
@@ -27,5 +29,9 @@ public static class PresentationServiceRegistration
         services.AddSingleton<LogListViewModel>();
         services.AddSingleton<DatabaseListUserControl>();
         services.AddSingleton<DatabaseListViewModel>();
+        services.AddSingleton<RestoreUserControl>();
+        services.AddSingleton<RestoreViewModel>();
+        services.AddSingleton<MessageBoxWindow>();
+        services.AddSingleton<MessageBoxViewModel>();
     });
 }

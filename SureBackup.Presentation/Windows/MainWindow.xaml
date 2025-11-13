@@ -35,8 +35,10 @@
             <controls:CustomBorderButton BorderBackground="{StaticResource TealColorBrush}"
                 BorderThickness="0,0,0,1" BorderBrush="{StaticResource LightGrayBlueColorBrush}" FontContent="&#xf03a;" Foreground="White" FontSize="20"
                Command="{Binding LogListViewCommand}" ButtonPadding="15"/>
-            
-          
+            <controls:CustomBorderButton BorderBackground="{StaticResource TealColorBrush}"
+       BorderThickness="0,0,0,1" BorderBrush="{StaticResource LightGrayBlueColorBrush}" FontContent="&#xf1b8;" Foreground="White" FontSize="20"
+      Command="{Binding RestoreViewCommand}" ButtonPadding="15"/>
+
         </StackPanel>
         <Border Grid.Column="1" Grid.Row="0" BorderThickness="1,0,0,0" BorderBrush="{StaticResource LightGrayBlueColorBrush}" 
                 Background="{StaticResource LightGrayBlueColorBrush}">
@@ -44,7 +46,9 @@
         
         </Border>
         <StackPanel Background="{StaticResource LightGrayBlueColorBrush}" Grid.Row="2" Grid.Column="1">
-            
+            <TextBlock Text="© 2025 Faraz Moshtael. All rights reserved." Foreground="{StaticResource TealColorBrush}"
+                       Margin="10,0,0,0" VerticalAlignment="Bottom" Grid.Row="2" HorizontalAlignment="Left" FontWeight="Bold"/>
+
         </StackPanel>
         
         

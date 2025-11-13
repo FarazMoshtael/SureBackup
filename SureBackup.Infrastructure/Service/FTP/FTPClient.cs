@@ -13,13 +13,11 @@ namespace SureBackup.Infrastructure.Service.FTP;
 public class FTPClient(ILogger<FTPClient> logger) : IFTPClient
 {
     private AsyncFtpClient? _ftpClient;
-    public async Task<Result> SetupFTPConnection(string ftpUrl, string userName, string password, CancellationToken token = default)
+    public Result SetupFTPConnection(string ftpUrl, string userName, string password, CancellationToken token = default)
     {
         try
         {
             _ftpClient = new AsyncFtpClient(ftpUrl, userName, password);
-            await _ftpClient.AutoConnect(token);
-            await _ftpClient.Disconnect();
             return Result.Successful();
         }
         catch (Exception ex)
@@ -90,7 +88,7 @@ public class FTPClient(ILogger<FTPClient> logger) : IFTPClient
         try
         {
             Result connectionResult = await ConnectAsync(token);
-            if (connectionResult.Success)
+            if (!connectionResult.Success)
                 return Result<List<FTPFileInfo>>.Failure(connectionResult.Message!);
 
             List<FTPFileInfo> files = (await _ftpClient!.GetListing())
@@ -120,12 +118,12 @@ public class FTPClient(ILogger<FTPClient> logger) : IFTPClient
         try
         {
             Result connectionResult = await ConnectAsync(token);
-            if (connectionResult.Success)
+            if (!connectionResult.Success)
                 return Result.Failure(connectionResult.Message!);
 
-            var ftpProgress = new Progress<FtpProgress>(p => onUploadProgressUpdated?.Report(p.Progress));
+            var ftpProgress = new Progress<FtpProgress>(p => onUploadProgressUpdated?.Report(p.TransferredBytes));
             FtpStatus uploadStatus = await _ftpClient!.UploadFile(localFilePath, remoteFilePath, FtpRemoteExists.Overwrite, false, FtpVerify.None, ftpProgress, token);
-            return uploadStatus.IsSuccess() ? Result.Failure(InfrastructureMessages.FTPProcessService.FTPUploadError) : Result.Successful();
+            return !uploadStatus.IsSuccess() ? Result.Failure(InfrastructureMessages.FTPProcessService.FTPUploadError) : Result.Successful();
         }
         catch (Exception ex)
         {

@@ -22,7 +22,7 @@ public class LogRepositoryTest
         var database = DatabaseInfoFaker.FakerRule().Generate();
 
         //Act
-        Result result = await logRepository.NewErrorLogAsync("test", database);
+        Result result = await logRepository.NewErrorLogAsync("test", database,1);
         Context.ChangeTracker.Clear();
 
         //Assert
@@ -37,7 +37,7 @@ public class LogRepositoryTest
         var database = DatabaseInfoFaker.FakerRule().Generate();
 
         //Act
-        Result result = await logRepository.NewInformationLogAsync("test", database);
+        Result result = await logRepository.NewInformationLogAsync("test", database, 1);
         Context.ChangeTracker.Clear();
 
         //Assert

@@ -1,31 +1,50 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net9.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <UseWPF>true</UseWPF>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net9.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UseWPF>true</UseWPF>
+		<Product>SureBackup</Product>
+		<Authors>Faraz Moshtael</Authors>
+		<Description>A WPF application for managing and handling local database backup process.</Description>
+		<Copyright>© 2025 Faraz Moshtael. All rights reserved.</Copyright>
+		<PackageTags>WPF;SQLServer;MySQL;FTP;AES;</PackageTags>
+		<Version>1.0.0</Version>
+		<FileVersion>1.0.0.0</FileVersion>
+		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+		<Title>SureBackup</Title>
+		<NeutralLanguage>en-US</NeutralLanguage>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<RepositoryUrl>https://github.com/FarazMoshtael/SureBackup</RepositoryUrl>
+		<Platforms>AnyCPU;x64</Platforms>
+		<ApplicationIcon>Assets\SureBackup.ico</ApplicationIcon>
 
-  <ItemGroup>
-    <None Remove="Fonts\fontawesome.otf" />
-  </ItemGroup>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-    <PackageReference Include="MediatR" Version="13.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.9" />
-    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="Fonts\fontawesome.otf" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\SureBackup.Application\SureBackup.Application.csproj" />
-    <ProjectReference Include="..\SureBackup.Infrastructure\SureBackup.Infrastructure.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+	  <Resource Include="Assets\SureBackup.ico" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Resource Include="Fonts\fontawesome.otf" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+		<PackageReference Include="MediatR" Version="13.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.9" />
+		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\SureBackup.Application\SureBackup.Application.csproj" />
+		<ProjectReference Include="..\SureBackup.Infrastructure\SureBackup.Infrastructure.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Resource Include="Fonts\fontawesome.otf" />
+	</ItemGroup>
 
 </Project>

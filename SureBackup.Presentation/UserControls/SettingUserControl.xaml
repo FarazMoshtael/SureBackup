@@ -55,12 +55,13 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="Backup Operation Path:" Margin="0,0,0,5" />
-                    
-                    
-                    <TextBox  Grid.ColumnSpan="1" Grid.Row="1" Grid.Column="0" IsReadOnly="True" Text="{Binding BackupSetting.BackupOperationPath}"/>
-                    <Button Grid.Row="1" Grid.Column="1" Content="Browse Directory"  HorizontalAlignment="Left" Margin="5,0,0,0" Padding="3"
-                        Command="{Binding BrowseDirectoryCommand}"/>
 
+
+                    <TextBox Height="25" Grid.ColumnSpan="1" Grid.Row="1" Grid.Column="0" IsReadOnly="True" Text="{Binding BackupOperationPath,Mode=TwoWay}"/>
+      
+                    <controls:CustomBorderButton  Grid.Row="1" Grid.Column="1"  ToolTip="Browse" BorderBackground="White"  ButtonPadding="0" HorizontalAlignment="Left" 
+                                                 FontContent="&#xf07b;" Foreground="Black" FontSize="20" Margin="5,0,0,0"
+               Command="{Binding BrowseDirectoryCommand}"/>
                 </Grid>
             </Grid>
         </GroupBox>

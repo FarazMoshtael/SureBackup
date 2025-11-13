@@ -16,6 +16,7 @@ public class MainViewModel : BaseViewModel
     public ICommand? SettingViewCommand { get; set; }
     public ICommand? DatabaseListViewCommand { get; set; }
     public ICommand? LogListViewCommand { get; set; }
+    public ICommand? RestoreViewCommand { get; set; }
 
     public MainViewModel(ISidebarNavigationService sidebarNavigationService)
     {
@@ -28,6 +29,7 @@ public class MainViewModel : BaseViewModel
             SettingViewCommand = new RelayCommand(SettingViewNavigation);
             DatabaseListViewCommand = new RelayCommand(DatabaseListViewNavigation);
             LogListViewCommand = new RelayCommand(LogListViewNavigation);
+            RestoreViewCommand = new RelayCommand(RestoreViewNavigation);
 
         };
         
@@ -53,5 +55,8 @@ public class MainViewModel : BaseViewModel
     {
         _sidebarNavigationService.NavigateTab<LogListViewModel>();
     }
-
+    private void RestoreViewNavigation()
+    {
+        _sidebarNavigationService.NavigateTab<RestoreViewModel>();
+    }
 }

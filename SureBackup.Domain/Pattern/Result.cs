@@ -27,16 +27,13 @@ public class Result
 {
     public bool Success { get; set; }
     public string? Message { get; set; }
-    public Result(string error)
+    public Result(bool success,string? message)
     {
-        Success = false;
-        Message = error;
+        Success = success;
+        Message = message;
     }
-    private Result()
-    {
-        Success = true;
-    }
-    public static Result Successful() => new Result();
-    public static Result Failure(string error) => new Result(error);
+   
+    public static Result Successful(string? message=null) => new Result(true,message);
+    public static Result Failure(string error) => new Result(false,error);
 
 }

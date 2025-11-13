@@ -3,25 +3,38 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+              xmlns:enums="clr-namespace:SureBackup.Domain.Enums;assembly=SureBackup.Domain"
              xmlns:local="clr-namespace:SureBackup.Presentation.UserControls" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ObjectDataProvider x:Key="DatabaseValues" 
+                            MethodName="GetValues"
+                            ObjectType="{x:Type sys:Enum}"
+                            xmlns:sys="clr-namespace:System;assembly=mscorlib">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="enums:Database"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
     <Grid>
-        <DataGrid AutoGenerateColumns="False" ColumnWidth="*" CanUserAddRows="True" CanUserDeleteRows="True"
+            <DataGrid  AutoGenerateColumns="False" ColumnWidth="*" CanUserAddRows="True" CanUserDeleteRows="True"
                   ItemsSource="{Binding Databases}">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="RowEditEnding">
-                    <i:InvokeCommandAction Command="{Binding RowEditEndingCommand}" 
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="RowEditEnding">
+                        <i:InvokeCommandAction Command="{Binding RowEditEndingCommand}" 
                                    CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Database" Binding="{Binding Name,UpdateSourceTrigger=PropertyChanged}"/>
-                <DataGridTextColumn Header="Connection String" Binding="{Binding ConnectionString,UpdateSourceTrigger=PropertyChanged}"/>
-                <DataGridTextColumn Header="Type" Binding="{Binding Database,UpdateSourceTrigger=PropertyChanged}"/>
-                <DataGridCheckBoxColumn Header="Is Active" Binding="{Binding IsActive,UpdateSourceTrigger=PropertyChanged}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Database" Binding="{Binding Name,UpdateSourceTrigger=PropertyChanged}"/>
+                    <DataGridTextColumn Header="Connection String" Binding="{Binding ConnectionString,UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridComboBoxColumn Header="Type" ItemsSource="{Binding Source={StaticResource DatabaseValues}}"
+                                            SelectedItemBinding="{Binding Database,UpdateSourceTrigger=PropertyChanged}"/>
+                    <DataGridCheckBoxColumn Header="Is Active" Binding="{Binding IsActive,UpdateSourceTrigger=PropertyChanged}"/>
 
-            </DataGrid.Columns>
-        </DataGrid>
-    </Grid>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
 </UserControl>

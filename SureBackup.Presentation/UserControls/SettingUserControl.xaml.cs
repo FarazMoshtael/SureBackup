@@ -26,6 +26,13 @@ namespace SureBackup.Presentation.UserControls
         {
             InitializeComponent();
             DataContext = _viewModel = viewModel;
+            _viewModel.SetupPasswordInputs = (setting) =>
+            {
+                EncryptionKeyPasswordBox.Password = setting?.BackupKey;
+                FTPUrlBox.Text = setting?.FTPUrl;
+                FTPUsernamePasswordBox.Password = setting?.FTPUsername;
+                FTPPasswordBox.Password = setting?.FTPPassword;
+            };
             _viewModel.Initialize();
         }
 

@@ -1,6 +1,7 @@
 ﻿
 using MediatR;
 using Microsoft.Extensions.Logging;
+using SureBackup.Application.Common;
 using SureBackup.Application.Repository;
 using SureBackup.Application.Service.Cryption;
 using SureBackup.Application.Service.Wrapper;
@@ -20,6 +21,13 @@ public class SaveBackupSettingCommandHandler(IBackupSettingRepository backupSett
             BackupSetting? setting = backupSettingRepository.QueryableItems().FirstOrDefault();
             if (setting is null)
                 setting = new();
+            if (request.IntervalMiliseconds > Constants.DayMilisecond * Constants.MaximumDaysInMonth)
+                return await Task.FromResult(Result.Failure(ApplicationMessages.BackupSetting.TooLateInterval));
+            if (!directoryWrapper.Exists(request.BackupOperationPath))
+                return await Task.FromResult(Result.Failure(ApplicationMessages.BackupSetting.InvalidBackupOperationPath));
+            if(request.EncryptionBackup && request.BackupKey?.Length!=Constants.KeySize)
+                return await Task.FromResult(Result.Failure(ApplicationMessages.BackupSetting.InvalidKeySize));
+
 
             setting.FTPUpload = request.FTPUpload;
             setting.EncryptionBackup = request.EncryptionBackup;
@@ -32,22 +40,20 @@ public class SaveBackupSettingCommandHandler(IBackupSettingRepository backupSett
                 setting.FTPEncryptedUsername = textCryptionService.Encrypt(request.FTPUsername);
             if (!string.IsNullOrEmpty(request.FTPPassword))
                 setting.FTPEncryptedPassword = textCryptionService.Encrypt(request.FTPPassword);
-            if(request.IntervalMiliseconds>Constants.DayMilisecond*Constants.MaximumDaysInMonth)
-                return await Task.FromResult(Result.Failure(DomainMessages.BackupSetting.TooLateInterval));
+      
 
             setting.HostSizeInBytes = request.HostSizeBytes;
             setting.IntervalMiliseconds = request.IntervalMiliseconds;
 
-            if (!directoryWrapper.Exists(request.BackupOperationPath))
-                return await Task.FromResult(Result.Failure(DomainMessages.BackupSetting.InvalidBackupOperationPath));
+       
             setting.BackupOperationPath = request.BackupOperationPath;
             await backupSettingRepository.SaveItemAsync(setting);
-            return await Task.FromResult(Result.Successful());
+            return await Task.FromResult(Result.Successful(ApplicationMessages.BackupSetting.SuccessfulSavingBackupSetting));
         }
         catch (Exception ex)
         {
             logger.LogError($"Save backup setting error: {ex.Message}");
-            return await Task.FromResult(Result.Failure(DomainMessages.BackupSetting.SavingProcessError));
+            return await Task.FromResult(Result.Failure(ApplicationMessages.BackupSetting.SavingProcessError));
         }
     }
 }

@@ -19,7 +19,7 @@ public class IntervalBackgroundService(ILogger<IntervalBackgroundService> logger
     private async Task RunAsync(int intervalMiliseconds, Action backgroundAction, CancellationToken ct)
     {
         using var timer = new PeriodicTimer(TimeSpan.FromMilliseconds(intervalMiliseconds));
-        while (await timer.WaitForNextTickAsync())
+        while (await timer.WaitForNextTickAsync(ct))
         {
             try
             {

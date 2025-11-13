@@ -7,14 +7,18 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <DataGrid AutoGenerateColumns="False" ColumnWidth="*">
+        <DataGrid AutoGenerateColumns="False" ColumnWidth="*" CanUserAddRows="False" CanUserDeleteRows="False"
+                      ItemsSource="{Binding Logs}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Date" />
-                <DataGridTextColumn Header="Related Database" />
-                <DataGridTextColumn Header="Message" />
-                <DataGridTextColumn Header="Log Type" />
+                <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
+                <DataGridTextColumn Header="Related Database" Binding="{Binding DatabaseInfo.Name}"/>
+                <DataGridTextColumn Header="Message" Binding="{Binding Message}"/>
+                <DataGridTextColumn Header="Log Type" Binding="{Binding Type}"/>
+                <DataGridTextColumn Header="Batch Number" Binding="{Binding BatchNumber}"/>
+
 
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
+
 </UserControl>

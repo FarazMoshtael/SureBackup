@@ -1,0 +1,29 @@
+﻿<Window x:Class="SureBackup.Presentation.Windows.MessageBoxWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SureBackup.Presentation.Windows" xmlns:controls="clr-namespace:SureBackup.Presentation.Controls"
+        mc:Ignorable="d"
+        Title="MessageBoxWindow" Height="180" Width="380" Background="{StaticResource TealColorBrush}" ResizeMode="NoResize" ShowInTaskbar="False"
+        WindowStartupLocation="CenterScreen" WindowStyle="None" Visibility="{Binding WindowVisibility,Mode=TwoWay}">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Border BorderThickness="0,0,0,1" BorderBrush="White">
+            <TextBlock Text="{Binding Title}" Grid.Row="0" VerticalAlignment="Center" FontWeight="Bold" Foreground="White" FontSize="15"/>
+
+        </Border>
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,5,0,0">
+            <TextBlock Text="{Binding Message}" VerticalAlignment="Top"  Foreground="White" FontSize="15"/>
+        </ScrollViewer>
+
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2" Margin="5">
+            <controls:CustomBorderButton Command="{Binding CloseCommand}" ToolTip="Ok" Availability="True" FontContent="&#xf00c;" Foreground="Green" Background="White" FontSize="20" />
+        </StackPanel>
+    </Grid>
+</Window>

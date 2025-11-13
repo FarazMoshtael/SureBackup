@@ -5,16 +5,34 @@
     <Application.Resources>
         <FontFamily x:Key="FontAwesome">pack://application:,,,/Fonts/#Font Awesome 7 Free Solid</FontFamily>
         <Color x:Key="TealColo">#47909f</Color>
-        <Color x:Key="PinkColo">#fc6c8c</Color>
+        <Color x:Key="PinkColor">#fc6c8c</Color>
         <Color x:Key="LightGrayBlueColor">#e0ecf0</Color>
+        <Color x:Key="CellColor">#2E8C99</Color>
         <SolidColorBrush x:Key="TealColorBrush" Color="{StaticResource TealColo}" />
-        <SolidColorBrush x:Key="PinkColorBrush" Color="{StaticResource PinkColo}" />
+        <SolidColorBrush x:Key="CellColorBrush" Color="{StaticResource CellColor}" />
+        <SolidColorBrush x:Key="PinkColorBrush" Color="{StaticResource PinkColor}" />
         <SolidColorBrush x:Key="LightGrayBlueColorBrush" Color="{StaticResource LightGrayBlueColor}" />
 
-        <Style x:Key="TableCellStyle" TargetType="Border">
+        <Style x:Key="TableCellStyleBorder" TargetType="Border">
             <Style.Setters>
-                <Setter Property="BorderBrush" Value="{StaticResource TealColorBrush}" />
-                <Setter Property="Background" Value="White" />
+                <Setter Property="BorderBrush" Value="White" />
+                <Setter Property="Background" Value="{StaticResource CellColorBrush}" />
+              
+            </Style.Setters>
+        </Style>
+        <Style x:Key="TableCellHeaderTextStyle" TargetType="TextBlock">
+            <Style.Setters>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="FontSize" Value="15" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+            </Style.Setters>
+        </Style>
+        <Style x:Key="TableCellTextStyle" TargetType="TextBlock">
+            <Style.Setters>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="FontSize" Value="15" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
             </Style.Setters>
         </Style>
     </Application.Resources>

@@ -16,6 +16,7 @@ public class LogEntityConfiguration : IEntityTypeConfiguration<Log>
         builder.Property(prop=>prop.Message).HasColumnName(nameof(Log.Message)).IsRequired().HasMaxLength(500);
         builder.Property(prop => prop.DatabaseInfoID).HasColumnName(nameof(Log.DatabaseInfoID)).IsRequired();
         builder.Property(prop=>prop.Date).HasColumnName(nameof(Log.Date)).IsRequired();
+        builder.Property(prop => prop.BatchNumber).HasColumnName(nameof(Log.BatchNumber)).HasDefaultValue(1).IsRequired();
 
         builder.HasOne(prop=>prop.DatabaseInfo).WithMany(prop=>prop.BackupLogs).HasForeignKey(prop=>prop.DatabaseInfoID);
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SureBackup.Presentation.ViewModels.UserControls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,19 @@ namespace SureBackup.Presentation.UserControls
     /// </summary>
     public partial class LogListUserControl : UserControl
     {
-        public LogListUserControl()
+        private LogListViewModel _viewModel;
+        public LogListUserControl(LogListViewModel viewModel)
         {
             InitializeComponent();
+            DataContext= _viewModel=viewModel;
+            _viewModel.Initialize();
+            IsVisibleChanged += OnVisibilityChanged;
+
+        }
+        private void OnVisibilityChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if ((bool)e.NewValue == true)
+                _viewModel.Initialize();
         }
     }
 }

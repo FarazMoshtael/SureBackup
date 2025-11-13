@@ -14,7 +14,7 @@ public class FTPUploadCommandHandler(IFTPProcessService FTPService, ILogger<FTPU
         try
         {
 
-            if (!request.BackupSetting.FTPCredentialsAvailable)
+            if (request.BackupSetting.FTPCredentialsAvailable)
             {
                 //Step 1: FTP credentials setup 
                 FTPService.SetupFTPCredentials(request.BackupSetting);

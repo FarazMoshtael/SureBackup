@@ -29,7 +29,7 @@ public class SaveDatabaseInfoCommandHandler(IDatabaseInfoRepository databaseInfo
             database.Database=request.DatabaseType;
             database.IsActive=request.IsActive;
             await databaseInfoRepository.SaveItemAsync(database);
-            return Result.Successful();
+            return Result.Successful(ApplicationMessages.DatabaseInfo.SuccessfulSave);
 
 
         }

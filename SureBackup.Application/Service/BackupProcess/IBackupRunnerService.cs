@@ -2,5 +2,5 @@
 
 public interface IBackupRunnerService
 {
-    Task RunBackupProcess(Action<double> onUploadProgressUpdated,Action<string> updateStatus);
+    Task RunBackupProcess(Action<string> progressLog, Action onBatchProcessFinished);
 }

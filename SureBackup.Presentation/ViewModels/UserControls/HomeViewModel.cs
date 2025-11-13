@@ -24,7 +24,7 @@ public class HomeViewModel : BaseViewModel
         {
             _runButtonEnabled = value;
             OnPropertyChanged();
-          
+
 
         }
     }
@@ -37,19 +37,26 @@ public class HomeViewModel : BaseViewModel
         {
             _stopButtonEnabled = value;
             OnPropertyChanged();
-           
+
 
         }
     }
+    private string _consoleLog = string.Empty;
+    public string ConsoleLog
+    {
+        get => _consoleLog;
+        set
+        {
+            _consoleLog = _consoleLog + value + " \n";
+            OnPropertyChanged();
+        }
+    }
 
+    public BackupSetting? BackupSetting { get; set; }
 
-
-    public BackupSetting? BackupSetting{ get; set; }
-    private Log? _recentLog;
 
     public string EncryptionStatus => BackupSetting?.EncryptionAvailable == true ? Constants.Available : Constants.NotAvailable;
     public string FTPStatus => BackupSetting?.FTPCredentialsAvailable == true ? Constants.Available : Constants.NotAvailable;
-    public string LastBackup => _recentLog is null ? Constants.NotAvailable : $"Database => {_recentLog.DatabaseInfo!.Name} , Date => {_recentLog.Date.ToString(Constants.DefaultDateFormat)}\n{_recentLog.Message}";
 
     private string _status = string.Empty;
     public string Status
@@ -104,29 +111,40 @@ public class HomeViewModel : BaseViewModel
         StopBackupProcessCommand = new RelayCommand(StopBackupProcess);
         OnInitialized += async (sender, arg) =>
         {
-            BackupSetting = await GetAvailableSetting();
-            OnPropertyChanged(nameof(BackupSetting));
-            _recentLog = await GetRecentLog();
-
+            await FetchAvailableSetting();
+            await FetchRecentLog();
         };
     }
 
 
-    private async Task<BackupSetting> GetAvailableSetting() => await _mediator.Send(new GetAvailableBackupSettingQuery());
-    private async Task<Log?> GetRecentLog() => await _mediator.Send(new GetRecentLogQuery());
+    private async Task FetchAvailableSetting()
+    {
+        BackupSetting = await _mediator.Send(new GetAvailableBackupSettingQuery());
+        OnPropertyChanged(nameof(BackupSetting));
+
+    }
+    private async Task FetchRecentLog()
+    {
+        List<Log> recentLogs = await _mediator.Send(new GetBatchRecentLogQuery());
+        SetConsoleLog($"Recent Batch Log: {(!recentLogs.Any() ? Constants.NotAvailable : string.Empty)}");
+        recentLogs.ForEach(log => SetConsoleLog($" Database => {log.DatabaseInfo!.Name}\n Date => {log.Date.ToString(Constants.DefaultDateFormat)}\n Message=> {log.Message} \n"));
+    }
 
     private void RunBackupProcess()
     {
+
         _intervalBackgroundService.Start(BackupSetting!.IntervalMiliseconds, () =>
         {
-            _backupRunnerService.RunBackupProcess((progress) =>
+            _backupRunnerService.RunBackupProcess((log) =>
             {
-                ProgressValue = progress;
-            }, (status) =>
+                SetConsoleLog(log);
+            }, async () =>
             {
-                Status = status;
+                await FetchRecentLog();
             });
         });
+        SetConsoleLog("Backup process started ...");
+
         RunButtonEnabled = false;
         StopButtonEnabled = true;
         BackupProcessStatusVisibility = Visibility.Visible;
@@ -138,8 +156,15 @@ public class HomeViewModel : BaseViewModel
         RunButtonEnabled = true;
         StopButtonEnabled = false;
         BackupProcessStatusVisibility = Visibility.Collapsed;
+        SetConsoleLog("Backup process stopped ...");
 
     }
 
-     
+    private void SetConsoleLog(string log, bool resetLog = false)
+    {
+        if (resetLog)
+            _consoleLog = string.Empty;
+        ConsoleLog = log;
+    }
+
 }

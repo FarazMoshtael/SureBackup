@@ -8,6 +8,8 @@ using SureBackup.Application.Query.BackupOption;
 using SureBackup.Domain.Common;
 using SureBackup.Domain.Entities;
 using SureBackup.Domain.Enums;
+using SureBackup.Domain.Pattern;
+using SureBackup.Presentation.Abstraction;
 using System.Windows.Input;
 
 namespace SureBackup.Presentation.ViewModels.UserControls;
@@ -82,6 +84,19 @@ public class SettingViewModel : BaseViewModel
                 BackupSetting.FTPUpload = _ftpUpload;
         }
     }
+    private string _backupOperationPath=string.Empty;
+    public string BackupOperationPath
+    {
+        get => _backupOperationPath;
+        set
+        {
+            _backupOperationPath = value;
+            OnPropertyChanged();
+            if (BackupSetting is not null)
+                BackupSetting.BackupOperationPath = _backupOperationPath;
+        }
+    }
+    public Action<BackupSetting?>? SetupPasswordInputs;
     #endregion
 
     #region Commands
@@ -92,12 +107,15 @@ public class SettingViewModel : BaseViewModel
 
     #region Services
     private IMediator? _mediator;
+    private IWindowNavigationService? _windowNavigationService;
+
     #endregion
 
 
-    public SettingViewModel(IMediator mediator)
+    public SettingViewModel(IMediator mediator, IWindowNavigationService windowNavigationService)
     {
         _mediator = mediator;
+        _windowNavigationService = windowNavigationService;
         BrowseDirectoryCommand = new RelayCommand(BrowseDirectory);
         SaveSettingCommand = new AsyncRelayCommand(SaveSetting);
         OnInitialized += async (sender, arg) => await RetrieveSetting();
@@ -113,7 +131,7 @@ public class SettingViewModel : BaseViewModel
             Multiselect = false
         };
         if (openFolderDialog?.ShowDialog() == true)
-            BackupSetting!.BackupOperationPath = openFolderDialog.FolderName;
+            BackupOperationPath = openFolderDialog.FolderName;
     }
 
     private async Task RetrieveSetting()
@@ -134,16 +152,21 @@ public class SettingViewModel : BaseViewModel
             _ => BackupSetting.IntervalMiliseconds
         };
         _useEncryption = BackupSetting.EncryptionBackup;
+        _ftpUpload = BackupSetting.FTPUpload;
+        _backupOperationPath = BackupSetting.BackupOperationPath;
         OnPropertyChanged(nameof(IntervalUnit));
         OnPropertyChanged(nameof(Interval));
         OnPropertyChanged(nameof(UseEncryption));
+        OnPropertyChanged(nameof(FTPUpload));
+        OnPropertyChanged(nameof(BackupOperationPath));
 
-
+        SetupPasswordInputs?.Invoke(BackupSetting);
     }
 
     private async Task SaveSetting()
     {
-        await _mediator!.Send(new SaveBackupSettingCommand(BackupSetting!.IntervalMiliseconds, BackupSetting.BackupOperationPath, BackupSetting.HostSizeInBytes,
-            BackupSetting.FTPUpload, BackupSetting.FTPUrl, BackupSetting.FTPUsername, BackupSetting.FTPPassword, BackupSetting.BackupKey, BackupSetting.EncryptionBackup));
+        Result result = await _mediator!.Send(new SaveBackupSettingCommand(BackupSetting!.IntervalMiliseconds, BackupSetting.BackupOperationPath, BackupSetting.HostSizeInBytes,
+              BackupSetting.FTPUpload, BackupSetting.FTPUrl, BackupSetting.FTPUsername, BackupSetting.FTPPassword, BackupSetting.BackupKey, BackupSetting.EncryptionBackup));
+        _windowNavigationService?.ShowMessageDialog(result.Message!);
     }
 }

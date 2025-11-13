@@ -1,6 +1,7 @@
 ﻿
 using MediatR;
 using Microsoft.Extensions.Logging;
+using SureBackup.Application.Common;
 using SureBackup.Application.Service.Cryption;
 using SureBackup.Application.Service.Wrapper;
 using SureBackup.Domain.Common;
@@ -34,7 +35,7 @@ public class FileEncryptionCommandHandler(IStreamCryptionService fileCryptionSer
         catch (Exception ex)
         {
             logger.LogError($"File encryption handler error: {ex.Message}");
-            return Task.FromResult(Result<string>.Failure($"{DomainMessages.FileCryption.EncryptionError} File path: {request.FilePath}"));
+            return Task.FromResult(Result<string>.Failure($"{ApplicationMessages.FileCryption.EncryptionError} File path: {request.FilePath}"));
         }
 
     }

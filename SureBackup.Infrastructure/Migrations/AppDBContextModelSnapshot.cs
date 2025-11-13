@@ -15,7 +15,7 @@ namespace SureBackup.Infrastructure.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "9.0.9");
+            modelBuilder.HasAnnotation("ProductVersion", "9.0.10");
 
             modelBuilder.Entity("SureBackup.Domain.Entities.BackupSetting", b =>
                 {
@@ -122,6 +122,12 @@ namespace SureBackup.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
                         .HasColumnName("ID");
+
+                    b.Property<int>("BatchNumber")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(1)
+                        .HasColumnName("BatchNumber");
 
                     b.Property<int>("DatabaseInfoID")
                         .HasColumnType("INTEGER")
