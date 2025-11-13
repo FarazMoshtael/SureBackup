@@ -13,6 +13,7 @@
 - **Live logging** - Live visual console logs.
 
 
+
 ## 🛠️ Tech Stack
 
 - **UI** - WPF - .Net 9
@@ -22,6 +23,9 @@
 - **Networking** - FluentFTP
 - **Testing** - XUnit
 - **Database** - SQLite
+- **Logging** - Serilog
+- **Mediator** -  Mediatr
+
 
 ## 🧩 Code Stack
 
@@ -34,6 +38,6 @@
 - **Dependency injection Support**
 
 
-The application is **free** to use. Hope you enjoy and support.
+The application is **free** to use. Hope you enjoy and support me.
 
 Next releases with new features are coming.
