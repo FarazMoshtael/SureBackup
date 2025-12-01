@@ -116,11 +116,14 @@
                 <TextBlock Text="FTP Password:" Grid.Row="0" Grid.Column="2"  Margin="3" />
                 <PasswordBox  Grid.Row="1" Grid.Column="2" IsEnabled="{Binding FTPUpload}" Margin="3" Padding="3" PasswordChanged="FTPPassword_Changed" x:Name="FTPPasswordBox"/>
 
-                <TextBlock Text="FTP Maximum Allowed Storage Size In Bytes:" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"  Margin="3"/>
+                <TextBlock Text="FTP Maximum Allowed Storage Size In Bytes:" Grid.Row="2" Grid.Column="0" TextWrapping="Wrap"  Margin="3"/>
                 <controls:NumericTextBox Text="{Binding BackupSetting.HostSizeInBytes}" IsEnabled="{Binding FTPUpload}"
                                          Grid.Row="3" Grid.Column="0"  Margin="3" Padding="3" />
-                
-                
+                <StackPanel Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" VerticalAlignment="Center">
+                    <CheckBox Content="Local File Removal" IsEnabled="{Binding FTPUpload}" IsChecked="{Binding BackupSetting.FTPUploadLocalFileRemoval,Mode=TwoWay}"/>
+                </StackPanel>
+
+
             </Grid>
         </GroupBox>
 

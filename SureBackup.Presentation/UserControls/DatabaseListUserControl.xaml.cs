@@ -1,4 +1,5 @@
-﻿using SureBackup.Presentation.ViewModels.UserControls;
+﻿using SureBackup.Domain.Entities;
+using SureBackup.Presentation.ViewModels.UserControls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +22,21 @@ namespace SureBackup.Presentation.UserControls
     /// </summary>
     public partial class DatabaseListUserControl : UserControl
     {
-
+        private DatabaseListViewModel _viewModel;
         public DatabaseListUserControl(DatabaseListViewModel viewModel)
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = _viewModel = viewModel;
             viewModel.Initialize();
+        }
+
+        private async void DatabaseGrid_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete)
+            {
+                var selectedItem = (sender as DataGrid)!.SelectedItem;
+               await _viewModel.DeleteDatabase(selectedItem as DatabaseInfo);
+            }
         }
     }
 }

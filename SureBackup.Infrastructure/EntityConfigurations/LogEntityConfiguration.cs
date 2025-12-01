@@ -18,6 +18,6 @@ public class LogEntityConfiguration : IEntityTypeConfiguration<Log>
         builder.Property(prop=>prop.Date).HasColumnName(nameof(Log.Date)).IsRequired();
         builder.Property(prop => prop.BatchNumber).HasColumnName(nameof(Log.BatchNumber)).HasDefaultValue(1).IsRequired();
 
-        builder.HasOne(prop=>prop.DatabaseInfo).WithMany(prop=>prop.BackupLogs).HasForeignKey(prop=>prop.DatabaseInfoID);
+        builder.HasOne(prop=>prop.DatabaseInfo).WithMany(prop=>prop.BackupLogs).HasForeignKey(prop=>prop.DatabaseInfoID).OnDelete(DeleteBehavior.Cascade);
     }
 }

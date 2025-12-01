@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SureBackup.Infrastructure.Database;
 
@@ -10,9 +11,11 @@ using SureBackup.Infrastructure.Database;
 namespace SureBackup.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class AppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20251119120834_LogDatabaseInfoDeleteBehaviourMigration")]
+    partial class LogDatabaseInfoDeleteBehaviourMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.10");
@@ -61,9 +64,6 @@ namespace SureBackup.Infrastructure.Migrations
                     b.Property<bool>("FTPUpload")
                         .HasColumnType("INTEGER")
                         .HasColumnName("FTPUpload");
-
-                    b.Property<bool>("FTPUploadLocalFileRemoval")
-                        .HasColumnType("INTEGER");
 
                     b.Property<string>("FTPUrl")
                         .HasColumnType("TEXT");

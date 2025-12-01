@@ -13,7 +13,7 @@
 
   <Properties>
     <DisplayName>SureBackup.Packaging</DisplayName>
-    <PublisherDisplayName>ASUS</PublisherDisplayName>
+    <PublisherDisplayName>SureBackup</PublisherDisplayName>
     <Logo>Images\StoreLogo.png</Logo>
   </Properties>
 

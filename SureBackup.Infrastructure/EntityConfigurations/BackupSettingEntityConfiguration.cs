@@ -20,6 +20,7 @@ public class BackupSettingEntityConfiguration : IEntityTypeConfiguration<BackupS
         builder.Property(prop => prop.FTPUpload).HasColumnName(nameof(BackupSetting.FTPUpload)).IsRequired();
         builder.Property(prop => prop.EncryptedBackupKey).HasColumnName(nameof(BackupSetting.EncryptedBackupKey)).HasMaxLength(500);
         builder.Property(prop => prop.EncryptionBackup).HasColumnName(nameof(BackupSetting.EncryptionBackup)).IsRequired();
+        builder.Property(prop => prop.FTPUploadLocalFileRemoval).HasColumnName(nameof(BackupSetting.FTPUploadLocalFileRemoval)).IsRequired();
 
 
     }

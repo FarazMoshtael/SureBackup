@@ -47,4 +47,14 @@ public class DatabaseListViewModel : BaseViewModel
             _windowNavigationService?.ShowMessageDialog(result.Message!);
         }
     }
+
+    public async Task DeleteDatabase(DatabaseInfo? databaseInfo)
+    {
+
+        if (databaseInfo is not null)
+        {
+            Result result = await _mediator!.Send(new SaveDatabaseInfoCommand(databaseInfo!.ID, databaseInfo.Name, databaseInfo.Database, databaseInfo.ConnectionString!, databaseInfo.IsActive));
+            _windowNavigationService?.ShowMessageDialog(result.Message!);
+        }
+    }
 }

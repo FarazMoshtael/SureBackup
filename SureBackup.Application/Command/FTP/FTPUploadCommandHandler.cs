@@ -3,11 +3,12 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using SureBackup.Application.Common;
 using SureBackup.Application.Service.FTP;
+using SureBackup.Application.Service.Wrapper;
 using SureBackup.Domain.Pattern;
 
 namespace SureBackup.Application.Command.FTP;
 
-public class FTPUploadCommandHandler(IFTPProcessService FTPService, ILogger<FTPUploadCommandHandler> logger) : IRequestHandler<FTPUploadCommand, Result>
+public class FTPUploadCommandHandler(IFTPProcessService FTPService, ILogger<FTPUploadCommandHandler> logger,IFileWrapper fileWrapper) : IRequestHandler<FTPUploadCommand, Result>
 {
     public async Task<Result> Handle(FTPUploadCommand request, CancellationToken cancellationToken)
     {
@@ -31,6 +32,17 @@ public class FTPUploadCommandHandler(IFTPProcessService FTPService, ILogger<FTPU
 
                 //Step 4: Uploading the backup file to FTP host
                 var FTPUploadResult = await FTPService.UploadFile(request.FilePath, request.OnUploadProgressUpdated);
+                if (FTPUploadResult.Success && request.BackupSetting.FTPUploadLocalFileRemoval)
+                {
+                    try
+                    {
+                        fileWrapper.DeleteFile(request.FilePath);
+                    }
+                    catch
+                    {
+                        FTPUploadResult.Message = "The upload was successful but the local file could not be removed.";
+                    }
+                }
                 return await Task.FromResult(FTPUploadResult);
             }
 

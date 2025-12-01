@@ -18,8 +18,8 @@
         </ObjectDataProvider>
     </UserControl.Resources>
     <Grid>
-            <DataGrid  AutoGenerateColumns="False" ColumnWidth="*" CanUserAddRows="True" CanUserDeleteRows="True"
-                  ItemsSource="{Binding Databases}">
+            <DataGrid  AutoGenerateColumns="False" ColumnWidth="*" CanUserAddRows="True" CanUserDeleteRows="True" x:Name="DatabaseGrid"
+               PreviewKeyDown="DatabaseGrid_PreviewKeyDown"   ItemsSource="{Binding Databases}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="RowEditEnding">
                         <i:InvokeCommandAction Command="{Binding RowEditEndingCommand}" 

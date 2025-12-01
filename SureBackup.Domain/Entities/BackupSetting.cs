@@ -36,6 +36,7 @@ public partial class BackupSetting : Entity
     public string? FTPEncryptedUrl { get; set; }
     public string? FTPEncryptedUsername { get; set; }
     public string? FTPEncryptedPassword { get; set; }
+    public bool FTPUploadLocalFileRemoval { get; set; } = true;
     public string? EncryptedBackupKey { get; set; }
     public bool EncryptionBackup { get; set; }
 
