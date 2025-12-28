@@ -10,7 +10,7 @@ using SureBackup.Infrastructure.Common;
 
 namespace SureBackup.Infrastructure.Service.FTP;
 
-public class FTPClient(ILogger<FTPClient> logger) : IFTPClient
+public class FTPClient(ILogger<FTPClient> logger) : IFTPClient,IDisposable
 {
     private AsyncFtpClient? _ftpClient;
     public Result SetupFTPConnection(string ftpUrl, string userName, string password, CancellationToken token = default)
@@ -133,4 +133,8 @@ public class FTPClient(ILogger<FTPClient> logger) : IFTPClient
 
     }
 
+    public void Dispose()
+    {
+        _ftpClient?.Dispose();
+    }
 }

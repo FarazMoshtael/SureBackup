@@ -16,7 +16,7 @@ public class StreamCryptionService : IStreamCryptionService
         aes.Key = bytes;
         aes.IV = iv;
 
-        ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
+        using ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
         using CryptoStream encryptionStream = new CryptoStream(destinationFile, encryptor, CryptoStreamMode.Write, leaveOpen: true);
 
         byte[] buffer = new byte[sourceFile.Length];
@@ -35,7 +35,7 @@ public class StreamCryptionService : IStreamCryptionService
         aes.Key = bytes;
         aes.IV = iv;
 
-        ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
+        using ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
         using CryptoStream decryptionStream = new CryptoStream(destinationFile, decryptor, CryptoStreamMode.Write,leaveOpen:true);
 
         byte[] buffer = new byte[sourceFile.Length];

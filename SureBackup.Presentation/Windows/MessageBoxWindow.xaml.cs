@@ -24,18 +24,24 @@ namespace SureBackup.Presentation.Windows
         public MessageBoxWindow(MessageBoxViewModel viewModel)
         {
             InitializeComponent();
-            Owner = App.Current.MainWindow;
+            //Owner = App.Current.MainWindow;
             DataContext = _viewModel = viewModel;
             viewModel.ShowWindow = () =>
             {
-                if (!_viewModel.WasShown)
-                {
-                    Show();
-                    viewModel.WasShown = true;
-                }
-                viewModel.WindowVisibility = Visibility.Visible;
+                ShowDialog();
+
+                //if (!_viewModel.WasShown)
+                //{
+                //    viewModel.WasShown = true;
+                //}
+                //viewModel.WindowVisibility = Visibility.Visible;
             };
             viewModel.Initialize();
+        }
+
+        private void CustomBorderButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

@@ -35,8 +35,13 @@ public class DatabaseListViewModel : BaseViewModel
         RowEditEndingCommand = new AsyncRelayCommand<DatabaseInfo>(RowEditEnding);
         OnInitialized += async (sender, arg) =>
         {
-            Databases = new ObservableCollection<DatabaseInfo>(await _mediator.Send(new GetDatabaseListQuery()));
+            await LoadDatabases();
         };
+
+    }
+    private async Task LoadDatabases()
+    {
+        Databases = new ObservableCollection<DatabaseInfo>(await _mediator!.Send(new GetDatabaseListQuery()));
 
     }
     private async Task RowEditEnding(DatabaseInfo? databaseInfo)
@@ -44,7 +49,10 @@ public class DatabaseListViewModel : BaseViewModel
         if (databaseInfo is not null)
         {
             Result result = await _mediator!.Send(new SaveDatabaseInfoCommand(databaseInfo!.ID, databaseInfo.Name, databaseInfo.Database, databaseInfo.ConnectionString!, databaseInfo.IsActive));
+            await LoadDatabases();
+
             _windowNavigationService?.ShowMessageDialog(result.Message!);
+
         }
     }
 
@@ -53,7 +61,9 @@ public class DatabaseListViewModel : BaseViewModel
 
         if (databaseInfo is not null)
         {
-            Result result = await _mediator!.Send(new SaveDatabaseInfoCommand(databaseInfo!.ID, databaseInfo.Name, databaseInfo.Database, databaseInfo.ConnectionString!, databaseInfo.IsActive));
+            Result result = await _mediator!.Send(new DeleteDatabaseInfoCommand(databaseInfo!.ID));
+            await LoadDatabases();
+
             _windowNavigationService?.ShowMessageDialog(result.Message!);
         }
     }

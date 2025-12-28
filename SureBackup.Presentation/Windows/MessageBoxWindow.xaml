@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SureBackup.Presentation.Windows" xmlns:controls="clr-namespace:SureBackup.Presentation.Controls"
         mc:Ignorable="d"
         Title="MessageBoxWindow" Height="180" Width="380" Background="{StaticResource TealColorBrush}" ResizeMode="NoResize" ShowInTaskbar="False"
-        WindowStartupLocation="CenterScreen" WindowStyle="None" Visibility="{Binding WindowVisibility,Mode=TwoWay}">
+        WindowStartupLocation="CenterScreen" WindowStyle="None" Visibility="{Binding WindowVisibility,Mode=TwoWay}" Topmost="True">
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -23,7 +23,7 @@
 
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2" Margin="5">
-            <controls:CustomBorderButton Command="{Binding CloseCommand}" ToolTip="Ok" Availability="True" FontContent="&#xf00c;" Foreground="Green" Background="White" FontSize="20" />
+            <controls:CustomBorderButton  ToolTip="Ok" Availability="True" FontContent="&#xf00c;" Foreground="Green" Background="White" FontSize="20" Click="CustomBorderButton_Click"/>
         </StackPanel>
     </Grid>
 </Window>

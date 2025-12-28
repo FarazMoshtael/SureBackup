@@ -103,13 +103,38 @@ namespace SureBackup.Presentation.Controls
             set => SetValue(ButtonPaddingProperty, value);
         }
 
+
+
+
+        public static readonly RoutedEvent ClickEvent =
+       EventManager.RegisterRoutedEvent(
+           "Click",
+           RoutingStrategy.Bubble,
+           typeof(RoutedEventHandler),
+           typeof(CustomBorderButton));
+
+        public event RoutedEventHandler Click
+        {
+            add { AddHandler(ClickEvent, value); }
+            remove { RemoveHandler(ClickEvent, value); }
+        }
+
+        protected virtual void OnClick()
+        {
+            RaiseEvent(new RoutedEventArgs(ClickEvent));
+        }
+
+
+
         public CustomBorderButton()
         {
             InitializeComponent();
             //DataContext = this;
         }
 
-         
-
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            OnClick();
+        }
     }
 }

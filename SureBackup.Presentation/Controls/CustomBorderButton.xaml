@@ -20,7 +20,7 @@
             </Style>
         </Border.Style>
 
-        <Button  HorizontalAlignment="Center"  Background="Transparent" BorderThickness="0" BorderBrush="WhiteSmoke"
+        <Button Click="Button_Click" HorizontalAlignment="Center"  Background="Transparent" BorderThickness="0" BorderBrush="WhiteSmoke"
  Padding="{Binding ButtonPadding,ElementName=Root}" Command="{Binding Command,ElementName=Root}">
             <Button.ContentTemplate>
                 <DataTemplate>

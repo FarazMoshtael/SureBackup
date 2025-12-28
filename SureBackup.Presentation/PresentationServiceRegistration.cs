@@ -39,7 +39,7 @@ public static class PresentationServiceRegistration
             services.AddSingleton<DatabaseListViewModel>();
             services.AddSingleton<RestoreUserControl>();
             services.AddSingleton<RestoreViewModel>();
-            services.AddSingleton<MessageBoxWindow>();
+            services.AddTransient<MessageBoxWindow>();
             services.AddSingleton<MessageBoxViewModel>();
         });
         return hostBuilder;
